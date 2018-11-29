@@ -47,6 +47,8 @@ mypdf <- function(x){  # should accept any real number and chekc that its a vali
                 2*x
   }
 mypdf
+v <- integrate(mypdf,0,1) # check for valid pdf
+v[1] ==1
 tester <- sampler(4, mypdf , 0, 1/2, 1)
 tester
 tester3 <- tester[!is.na(tester)] # should be removing na
