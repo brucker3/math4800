@@ -15,6 +15,10 @@
 
 rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
+  veccheck <- integrate(mypdf,lower,upper) # check for valid pdf
+  if(!(v[1] == 1)) {
+    return(print("invalid pdf"))
+  }
   while(length(holder) < n) {
     sim <- c()
     sim <- replicate(n, {
@@ -44,9 +48,9 @@ mypdf <- function(x){  # should accept any real number and chekc that its a vali
                 2*x    # this is integrate to 1 and be nonnegative 2 criteria
   }
 mypdf
-v <- integrate(mypdf,0,1) # check for valid pdf
+v <- integrate(mypdf,0) # check for valid pdf
 v[1] ==1
-tester <- rejectionSampler(2000, mypdf , 0, 1/2, 1)
+tester <- rejectionSampler(20, mypdf , 0, 1/2, 1)
 tester
 length(tester)
 head(tester)
