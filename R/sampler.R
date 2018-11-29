@@ -17,10 +17,13 @@ rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
   veccheck <- integrate(mypdf,lower,upper) # check for valid pdf
   if(!(v[1] == 1)) {
-    return(print("invalid pdf"))
+    stop("invalid pdf")
   }
-  if( !(n >1) ) {
-    return(print(" n must be an interger greater than 0 "))
+  if( !(n >= 1) ) {
+    stop(" n must be an interger greater than 0 ")
+  }
+  if( !(lower >= 1) || !(lower < upper) ) {
+    stop(" lower must be an interger greater than 0 and less than uppper ")
   }
 
 
