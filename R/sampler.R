@@ -19,6 +19,11 @@ rejectionSampler <- function(n , pdf, lower, upper, C ){
   if(!(v[1] == 1)) {
     return(print("invalid pdf"))
   }
+  if( !(n >1) ) {
+    return(print(" n must be an interger greater than 0 "))
+  }
+
+
   while(length(holder) < n) {
     sim <- c()
     sim <- replicate(n, {
@@ -50,7 +55,7 @@ mypdf <- function(x){  # should accept any real number and chekc that its a vali
 mypdf
 v <- integrate(mypdf,0) # check for valid pdf
 v[1] ==1
-tester <- rejectionSampler(20, mypdf , 0, 1/2, 1)
+tester <- rejectionSampler(1, mypdf , 0, 1/2, 1)
 tester
 length(tester)
 head(tester)
