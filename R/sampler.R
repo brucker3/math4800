@@ -13,10 +13,11 @@
 #' @export
 
 
-sampler <- function(n , pdf, lower, upper, C ){
+rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
   while(length(holder) < n) {
-    holder <- replicate(n, {
+    sim <- c()
+    sim <- replicate(n, {
       x <- runif(1, lower, upper) # proposed
       check <- runif(1,0,C) # commpaer to pdf
       pdfcheck <- pdf(x) # run proposed point wiht pdf
@@ -26,16 +27,12 @@ sampler <- function(n , pdf, lower, upper, C ){
         NA
       }
     })
-    holder <- holder[!is.na(holder)]
+    holder <- c(holder,sim[!is.na(sim)])
   }
-  print(length(holder))
-  print(holder)
   if(!(length(holder) == n)) {
-    print("test 1")
     holder <- holder[1:n]
   }
   return(holder)
-
 }
 
 
@@ -44,13 +41,15 @@ sampler <- function(n , pdf, lower, upper, C ){
 
 
 mypdf <- function(x){  # should accept any real number and chekc that its a valid pdf
-                2*x
+                2*x    # this is integrate to 1 and be nonnegative 2 criteria
   }
 mypdf
 v <- integrate(mypdf,0,1) # check for valid pdf
 v[1] ==1
-tester <- sampler(4, mypdf , 0, 1/2, 1)
+tester <- rejectionSampler(2000, mypdf , 0, 1/2, 1)
 tester
+length(tester)
+head(tester)
 tester3 <- tester[!is.na(tester)] # should be removing na
 tester3
 tester[1]
