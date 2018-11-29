@@ -15,31 +15,55 @@
 
 sampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
-  holder <- replicate(n, {
+  while(length(holder) < n) {
+    holder <- replicate(2*n, {
       x <- runif(1, 0, 1)
       y <- runif(1, 0, upper)
       z <- runif(1, 0, lower)
       if (y > x ) {
-        holder <- c(holder,"na")
+        NA
       }else {
-        holder <- c(holder,x)
-        }
+        x
+      }
     })
+    holder <- holder[!is.na(holder)]
+  }
+
+  print(length(holder))
+  print(holder)
+  if(!(length(holder) == n)) {
+    print("test 1")
+    holder <- holder[1:n]
+  }
   return(holder)
 
 }
 
 
-tester <- sampler(4, rnorm(0,1) , 0, 1/2, 1)
+
+
+
+
+
+
+tester <- sampler(6, rnorm(0,1) , 0, 1/2, 1)
 tester
+tester3 <- tester[!is.na(tester)] # should be removing na
+tester3
 tester[1]
 tester[2]
 tester[3]
 tester[4]
+# functino documnetation now wokrking changes made to be able to save
+# need to rerun roxygen 2 ever time you change documnation
+# also devtool::document()
 
 
-
-
+vec <- c(1,2,3,4,5)
+vec
+n <- 3
+vec[1:n]
+vec
 
 
 
