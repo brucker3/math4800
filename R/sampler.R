@@ -16,19 +16,18 @@
 sampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
   while(length(holder) < n) {
-    holder <- replicate(2*n, {
-      x <- runif(1, 0, 1)
-      y <- runif(1, 0, upper)
-      z <- runif(1, 0, lower)
-      if (y > x ) {
-        NA
+    holder <- replicate(n, {
+      x <- runif(1, lower, upper) # proposed
+      check <- runif(1,0,C) # commpaer to pdf
+      pdfcheck <- pdf(x) # run proposed point wiht pdf
+      if( pdfcheck <= check) {
+              x
       }else {
-        x
+        NA
       }
     })
     holder <- holder[!is.na(holder)]
   }
-
   print(length(holder))
   print(holder)
   if(!(length(holder) == n)) {
@@ -44,9 +43,11 @@ sampler <- function(n , pdf, lower, upper, C ){
 
 
 
-
-
-tester <- sampler(6, rnorm(0,1) , 0, 1/2, 1)
+mypdf <- function(x){  # should accept any real number and chekc that its a valid pdf
+                2*x
+  }
+mypdf
+tester <- sampler(4, mypdf , 0, 1/2, 1)
 tester
 tester3 <- tester[!is.na(tester)] # should be removing na
 tester3
