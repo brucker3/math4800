@@ -13,30 +13,38 @@
 #' @export
 
 
-sampler <- function(n , pdf, lower, upper, C ){
+rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
-  while(length(holder) < n) {
-    holder <- replicate(2*n, {
-      x <- runif(1, 0, 1)
-      y <- runif(1, 0, upper)
-      z <- runif(1, 0, lower)
-      if (y > x ) {
-        NA
-      }else {
-        x
-      }
-    })
-    holder <- holder[!is.na(holder)]
+  veccheck <- integrate(mypdf,lower,upper) # check for valid pdf
+  if(!(v[1] == 1)) {
+    stop("invalid pdf")
+  }
+  if( !(n >= 1) ) {
+    stop(" n must be an interger greater than 0 ")
+  }
+  if( !(lower >= 1) || !(lower < upper) ) {
+    stop(" lower must be an interger greater than 0 and less than uppper ")
   }
 
-  print(length(holder))
-  print(holder)
+
+  while(length(holder) < n) {
+    sim <- c()
+    sim <- replicate(n, {
+      x <- runif(1, lower, upper) # proposed
+      check <- runif(1,0,C) # commpaer to pdf
+      pdfcheck <- pdf(x) # run proposed point wiht pdf
+      if( pdfcheck <= check) {
+              x
+      }else {
+        NA
+      }
+    })
+    holder <- c(holder,sim[!is.na(sim)])
+  }
   if(!(length(holder) == n)) {
-    print("test 1")
     holder <- holder[1:n]
   }
   return(holder)
-
 }
 
 
@@ -44,10 +52,16 @@ sampler <- function(n , pdf, lower, upper, C ){
 
 
 
-
-
-tester <- sampler(6, rnorm(0,1) , 0, 1/2, 1)
+mypdf <- function(x){  # should accept any real number and chekc that its a valid pdf
+                2*x    # this is integrate to 1 and be nonnegative 2 criteria
+  }
+mypdf
+v <- integrate(mypdf,0) # check for valid pdf
+v[1] ==1
+tester <- rejectionSampler(1, mypdf , 0, 1/2, 1)
 tester
+length(tester)
+head(tester)
 tester3 <- tester[!is.na(tester)] # should be removing na
 tester3
 tester[1]
