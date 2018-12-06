@@ -16,7 +16,7 @@
 rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
   veccheck <- integrate(mypdf,lower,upper) # check for valid pdf
-  if(!(v[1] == 1)) {
+  if(!(veccheck[1] == 1)) {
     stop("invalid pdf")
   }
   if( !(n >= 1) ) {
@@ -54,10 +54,11 @@ mypdf <- function(x){  # should accept any real number and chekc that its a vali
                 2*x    # this is integrate to 1 and be nonnegative 2 criteria
   }
 mypdf
-v <- integrate(mypdf,0) # check for valid pdf
+v <- integrate(mypdf,0,1) # check for valid pdf
 v[1] ==1
-tester <- rejectionSampler(6, mypdf , 5, 1/2, 1)
+tester <- rejectionSampler(1000, mypdf , 0, 1, 1)
 tester
+hist(tester)
 length(tester)
 head(tester)
 tester3 <- tester[!is.na(tester)] # should be removing na
@@ -78,5 +79,7 @@ vec[1:n]
 vec
 
 
+# hw 9 problem 4
+pchisq(1,8)
 
 
