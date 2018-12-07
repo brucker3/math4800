@@ -11,6 +11,11 @@
 #'
 #' @return data.frame of random deviate pairs
 #' @export
+#'
+#' @examples
+#' jointRejectionSampler(n = 10000, jpdf = jointunif, a = 0, b = 1, C = 1))
+#' jointRejectionSampler(n = 10000, jpdf = jointnorm, a = 0, b = 1, C = 1))
+#'
 
 
 jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
@@ -41,13 +46,36 @@ jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
 #' @return join uniform pdf
 #' @export
 
-jointpdf <- function(x,y){
+jointunif <- function(x,y){
   joint <- dunif(x) * dunif(y)
   return(joint)
 
 }
 
+#' math4800 project
+#' this file implemnts a funciton to sample from a joint  random variable that is defifned on a square
+#'
+#'
+#' @description This function returns a value from a normal joint continus random variable note both x and y
+#' must be the same value to be a valid for this 2D sampling function sense we are sampling from a square
+#'
+#' @param x input for the first marginal normal distribution
+#' @param y input for the first marginal normal distribution
+#'
+#' @return join normal pdf
+#' @export
 
+jointnorm <- function(x,y){
+  if( x == y) {
+    if(x >=0 && x <= 1 && y >= 0 && y <= 1) {
+      joint <- dnorm(x) * dnorm(y)
+    }else{
+      0
+    }
+  }else{
+   0
+  }
+}
 
 
 

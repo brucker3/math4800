@@ -11,6 +11,11 @@
 #'
 #' @return data.frame of random deviate pairs
 #' @export
+#' @examples
+#' rejectionSampler(n = 10000, pdf = mypdf, lower = 0, upper = 1, C = 1)
+#' rejectionSampler(n = 10000, pdf = betapdf, lower = 0, upper = 1, C = 1)
+#'
+
 
 
 rejectionSampler <- function(n , pdf, lower, upper, C ){
@@ -61,8 +66,19 @@ mypdf <- function(x){
 }
 
 
+#' math4800 project
+#'
+#' @description This function is a simple  normal pdf returns a number
+#'
+#' @param x number that should be between 0 and 1 or else the pdf is 0
+#' @export
+normpdf <- function(x){
+  if(x >=0 && x <= 1  ) {
+     dnorm(x)
+  }
+}
 
-
-
-
+d <- integrate(normpdf,0,1)
+d[1]
+rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
 
