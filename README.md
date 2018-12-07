@@ -18,7 +18,7 @@ You can install this package by using `devtools`:
 devtools::install_github("brucker3/math4800")
 ```
 
-q
+
 
 
 
