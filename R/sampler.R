@@ -46,40 +46,23 @@ rejectionSampler <- function(n , pdf, lower, upper, C ){
 }
 
 
+#' math4800 project
+#'
+#' @description This function is a simple pdf returns a number
+#'
+#' @param x number that should be between 0 and 2 or else the pdf is 0
+#' @export
+mypdf <- function(x){
+  if( x <= 2  && x >= 0) {
+    x/2
+  }else{
+      0
+  }
+}
 
 
 
 
-#mypdf <- function(x){  # should accept any real number and chekc that its a valid pdf
-#                2*x    # this is integrate to 1 and be nonnegative 2 criteria
-#  }
-# mypdf
-# v <- integrate(mypdf,0,1) # check for valid pdf
-# v[1] ==1
-# tester <- rejectionSampler(1000, mypdf , 0, 1, 1)
-# tester
-# hist(tester)
-# length(tester)
-# head(tester)
-# tester3 <- tester[!is.na(tester)] # should be removing na
-# tester3
-# tester[1]
-# tester[2]
-# tester[3]
-# tester[4]
-# functino documnetation now wokrking changes made to be able to save
-# need to rerun roxygen 2 ever time you change documnation
-# also devtool::document()
 
-
-# vec <- c(1,2,3,4,5)
-# vec
-# n <- 3
-# vec[1:n]
-# vec
-
-
-# hw 9 problem 4
-#pchisq(1,8)
 
 
