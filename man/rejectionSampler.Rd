@@ -24,3 +24,9 @@ data.frame of random deviate pairs
 \description{
 This function returns a vector with n elemtns from a continus random variable
 }
+\examples{
+rejectionSampler(n = 1000, pdf = mypdf, lower = 0, upper = 2, C = 1)
+this is an exact bounds so that the pdf integrates to 1
+rejectionSampler(n = 1000, pdf = normpdf, lower = -100, upper = 100, C = 1)
+
+}

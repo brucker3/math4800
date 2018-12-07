@@ -35,51 +35,104 @@ this R packaged allows you to perform rejection sampling from pdf and joint pdf.
   3. selecte your check value from a uniform between 0 and the maximum with in this case is C 
   4. compare if the output of the pdf and the original value is less than the check value then you accept it. 
   
-## simple rejction example
+## simple rejction examples
   
   Here is a simple example of how the rejection sampler would run with a pdf from the package.
-
+  this is a example if  you run rejection sampler with a small n and an example output
 ```{r}
-          rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
+          holder <- rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
+           hist(holder)
           # 0.01618789 0.24490906 0.05359767 0.49077322 1.70218396
+          #pdf used in rejction ssampler
+          mypdf <- function(x){
+             if( x <= 2  && x >= 0) {
+                x/2
+             }else{
+                 0
+             }
+          }
+          
+           holder1 <- rejectionSampler(n = 5, pdf = normpdf, lower = 0, upper = 3, C = 1)
+          hist(holder1)
+          # 2.2596883 0.9969329 0.8917946 1.2306571 1.4431262
+           #pdf used in rejction ssampler
+         normpdf <- function(x){
+              dnorm(x)
+          }
+
 ```
-    this is a example of you you run rejection sampler with a small n and an example output
+  
 
 
+## 2D rejection sampler
+
+  this rejection sampler works on join distributions that are defined on a square. the underlying algorithem works the same way expect 
+  that here we are dealing with joint distributions that are defined for a specific region of the plain
 
 
-
-## Figures
-
-
-
-
-
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+  Here is a simpler joint rejection smapler with a joint normal distirbtion
+```{r}
+    holder <- jointRejectionSampler(n = 10, jointpdf = jointnorm, lower = 0, upper = 1, C = 1)
+     hist(holder)
+     # jointpdf used in rejction ssampler
+    jointnorm <- function(x,y){
+      if( x == y) {
+        if(x >=0 && x <= 1 && y >= 0 && y <= 1) {
+          joint <- dnorm(x) * dnorm(y)
+        }else{
+          0
+        }
+      }else{
+        0
+      }
+    }
+    
 ```
+out put from the rejction sampler  
+         x         y
+1  0.3267715 0.8545568
+2  0.7263313 0.4751195
+3  0.6225835 0.4948918
+4  0.5576389 0.2399189
+5  0.4323270 0.8654610
+6  0.3047128 0.8800500
+7  0.2844174 0.8304783
+8  0.6518205 0.6154928
+9  0.5631891 0.4660881
+10 0.3482138 0.4825210
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+    Another example with a joint uniform function 
+```{r}
+    holder <- jointRejectionSampler(n = 1000, jointpdf = jointunif, lower = 0, upper = 1, C = 1)
+    hist(holder)
+    # jointpdf used in rejction ssampler
+    jointunif <- function(x,y){
+       if(0 <= x && x <= 1 && 0 <= y && y <= 1) {
+          .5
+      }else {
+          0
+      }
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+    }
+    
 ```
+out put of the 2D rejection sampler using a joint uniform R.V.
+            x          y
+1  0.43593755 0.70838476
+2  0.09677250 0.96729673
+3  0.13023959 0.33197155
+4  0.05804621 0.56934939
+5  0.85796676 0.91361058
+6  0.73084249 0.47628922
+7  0.85954057 0.24595708
+8  0.15807758 0.03623352
+9  0.33162128 0.24503933
+10 0.15412658 0.26729462
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+
+
+
+
+
