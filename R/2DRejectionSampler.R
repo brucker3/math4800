@@ -14,7 +14,6 @@
 
 
 jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
-  #browser()
   samples <- data.frame(x = numeric(0),  y = numeric(0))
   while( !(n == nrow(samples)) ) {
     reject <- TRUE
@@ -30,19 +29,6 @@ jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
   }
   return(samples)
 }
-
-
-#jointtester <- jointRejectionSampler(30000, jointpdf , 0, 1, 2)
-#jointtester
-#nrow(jointtester)
-#hist(jointtester$x)
-#hist(jointtester$y)
-
-# should accept any real number and chekc that its a valid pdf
-# this is integrate to 1 and be nonnegative 2 criteria
-# continous rv with finite support uniform and beta
-
-
 
 #' math4800 project
 #' this file implemnts a funciton to sample from a joint  random variable that is defifned on a square
