@@ -13,12 +13,17 @@
 #' @export
 #'
 #' @examples
-#' jointRejectionSampler(n = 10000, jpdf = jointunif, a = 0, b = 1, C = 1))
-#' jointRejectionSampler(n = 10000, jpdf = jointnorm, a = 0, b = 1, C = 1))
-#'
+#' jointRejectionSampler(n = 1000, jointpdf = jointnorm, lower = 0, upper = 1, C = 1)
+#' jointRejectionSampler(n = 1000, jointpdf = jointunif, lower = 0, upper = 1, C = 1)
 
 
 jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
+  if( !(n >= 1) ) {
+    stop(" n must be an interger greater than 0 ")
+  }
+  if( !(lower < upper) ) {
+    stop(" lower must be an interger less than uppper ")
+  }
   samples <- data.frame(x = numeric(0),  y = numeric(0))
   while( !(n == nrow(samples)) ) {
     reject <- TRUE
@@ -45,12 +50,16 @@ jointRejectionSampler <- function(n, jointpdf, lower, upper, C) {
 #'
 #' @return join uniform pdf
 #' @export
-
 jointunif <- function(x,y){
-  joint <- dunif(x) * dunif(y)
-  return(joint)
+  if(0 <= x && x <= 1 && 0 <= y && y <= 1) {
+    .5
+  }else {
+    0
+  }
 
 }
+
+
 
 #' math4800 project
 #' this file implemnts a funciton to sample from a joint  random variable that is defifned on a square
@@ -64,7 +73,6 @@ jointunif <- function(x,y){
 #'
 #' @return join normal pdf
 #' @export
-
 jointnorm <- function(x,y){
   if( x == y) {
     if(x >=0 && x <= 1 && y >= 0 && y <= 1) {
@@ -76,6 +84,5 @@ jointnorm <- function(x,y){
    0
   }
 }
-
 
 

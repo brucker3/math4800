@@ -24,3 +24,7 @@ data.frame of random deviate pairs
 \description{
 This function returns a data frome with n elemtns from a joint continus random variable
 }
+\examples{
+jointRejectionSampler(n = 1000, jointpdf = jointnorm, lower = 0, upper = 1, C = 1)
+jointRejectionSampler(n = 1000, jointpdf = jointunif, lower = 0, upper = 1, C = 1)
+}

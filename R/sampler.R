@@ -12,23 +12,28 @@
 #' @return data.frame of random deviate pairs
 #' @export
 #' @examples
-#' rejectionSampler(n = 10000, pdf = mypdf, lower = 0, upper = 1, C = 1)
-#' rejectionSampler(n = 10000, pdf = betapdf, lower = 0, upper = 1, C = 1)
+#' rejectionSampler(n = 1000, pdf = mypdf, lower = 0, upper = 2, C = 1)
+#' this is an exact bounds so that the pdf integrates to 1
+#' rejectionSampler(n = 1000, pdf = normpdf, lower = -100, upper = 100, C = 1)
 #'
 
 
 
 rejectionSampler <- function(n , pdf, lower, upper, C ){
   holder <- c()
-  veccheck <- integrate(mypdf,lower,upper) # check for valid pdf
-  if(!(veccheck[1] == 1)) {
-    stop("invalid pdf")
-  }
+  veccheck <- integrate(pdf,lower,upper) # check for valid pdf
+  print(veccheck[1])
+   if(!(round(veccheck[1]$value) == 1)) {
+      stop("invalid pdf")
+   }
   if( !(n >= 1) ) {
     stop(" n must be an interger greater than 0 ")
   }
   if( !(lower < upper) ) {
     stop(" lower must be an interger less than uppper ")
+  }
+  if(lower == -Inf || upper == Inf) {
+    warning("this bounds may cause errors")
   }
   while(length(holder) < n) {
     sim <- c()
@@ -73,12 +78,7 @@ mypdf <- function(x){
 #' @param x number that should be between 0 and 1 or else the pdf is 0
 #' @export
 normpdf <- function(x){
-  if(x >=0 && x <= 1  ) {
-     dnorm(x)
-  }
+    dnorm(x)
 }
 
-d <- integrate(normpdf,0,1)
-d[1]
-rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
 
