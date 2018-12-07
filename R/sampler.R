@@ -12,9 +12,9 @@
 #' @return data.frame of random deviate pairs
 #' @export
 #' @examples
-#' rejectionSampler(n = 10000, jpdf = mypdf, a = 0, b = 1, C = 1))
-#' rejectionSampler(n = 10000, jpdf = betapdf, a = 0, b = 1, C = 1))
-#' s
+#' rejectionSampler(n = 10000, pdf = mypdf, lower = 0, upper = 1, C = 1)
+#' rejectionSampler(n = 10000, pdf = betapdf, lower = 0, upper = 1, C = 1)
+#'
 
 
 
@@ -68,19 +68,17 @@ mypdf <- function(x){
 
 #' math4800 project
 #'
-#' @description This function is a simple  beta pdf returns a number
+#' @description This function is a simple  normal pdf returns a number
 #'
 #' @param x number that should be between 0 and 1 or else the pdf is 0
-#' @parm shape is the shape input value for beta
 #' @export
-betapdf <- function(x, shape){
-  if(0 <= x && x <= 1 ) {
-    dbeta(x = x, shape = shape)
-  }else{
-    0
+normpdf <- function(x){
+  if(x >=0 && x <= 1  ) {
+     dnorm(x)
   }
 }
 
-
-
+d <- integrate(normpdf,0,1)
+d[1]
+rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
 

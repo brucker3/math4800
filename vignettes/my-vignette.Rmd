@@ -35,21 +35,17 @@ this R packaged allows you to perform rejection sampling from pdf and joint pdf.
   3. selecte your check value from a uniform between 0 and the maximum with in this case is C 
   4. compare if the output of the pdf and the original value is less than the check value then you accept it. 
   
-  the is definder as rejectionSampler(n, pdf, lower, upper, C)
-```{r}
-      rejectionSampler(10,mypdf,0,1,1 )
-      mypdf <- function(x){
-         if( x <= 2  && x >= 0) {
-            x/2
-      }else{
-            0
-      }
-    }
-      
-
-
-```
+## simple rejction example
   
+  Here is a simple example of how the rejection sampler would run with a pdf from the package.
+
+```{r}
+          rejectionSampler(n = 5, pdf = mypdf, lower = 0, upper = 2, C = 1)
+          # 0.01618789 0.24490906 0.05359767 0.49077322 1.70218396
+```
+    this is a example of you you run rejection sampler with a small n and an example output
+
+
 
 
 
