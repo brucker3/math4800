@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "math4800 project an R packing for distribution sampling"
+author: "Bayard Rucker"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -14,27 +14,51 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(math4800)
 ```
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
-## Vignette Info
+## General description
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+this R packaged allows you to perform rejection sampling from pdf and joint pdf. the user has to give an input pdf and specify the size of the sample they would like as well as bounds and the the maximum of the pdf 
 
-## Styles
+## Rejection Sampling
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+  Rejection sampling is a type of exact simulation algorithem that works for all real numbers and in higher
+  deminsions 
+  
+  algorithem steps
+  1. selecte a random proposed candiate from a uniforma rv
+  2. put the propsed candiate into the given pdf
+  3. selecte your check value from a uniform between 0 and the maximum with in this case is C 
+  4. compare if the output of the pdf and the original value is less than the check value then you accept it. 
+  
+  the is definder as rejectionSampler(n, pdf, lower, upper, C)
+```{r}
+      rejectionSampler(10,mypdf,0,1,1 )
+      mypdf <- function(x){
+         if( x <= 2  && x >= 0) {
+            x/2
+      }else{
+            0
+      }
+    }
+      
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+
+```
+  
+
+
 
 ## Figures
+
+
+
+
+
 
 The figure sizes have been customised so that you can easily put two images side-by-side. 
 
